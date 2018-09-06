@@ -1,4 +1,5 @@
 module.exports = {
+  base:"/vuepress/",
   title: "sixlib Note",
   description: "sixlib vuepress note",
   themeConfig: {
