@@ -1,7 +1,3 @@
----
-sidebar: false
----
-
 # VuePress
 
 ## 全局安装
