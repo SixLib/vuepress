@@ -219,28 +219,305 @@ message: val => this.myMethod(val);
 ### v-html
 
 :::tip 说明
-更新元素的`innerHTML`。**内容按普通html插入 - 不会作为Vue模板进行编译**。如果试图使用`v-html`组合模板，可以重新考虑是否使用t通过使用组件来替代。
+更新元素的`innerHTML`。**内容按普通 html 插入 - 不会作为 Vue 模板进行编译**。如果试图使用`v-html`组合模板，可以重新考虑是否使用 t 通过使用组件来替代。
 :::
 
 :::warning 警告
 在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) 攻击。只在可信内容上使用`v-html`，**永不**用在用户提交的内容上。
 :::
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<div v-html="html"></div>
+```
 
 ### v-show
 
+:::tip 说明
+根据表达式的真假值，切换元素的`display`CSS 属性。当条件变化时，该指令触发过渡效果。
+:::
+
+```html
+<div id="app">
+  <span v-show="isShow">这是一个v-show: {{isShow}}</span>
+</div>
+```
+
+```js
+var vm = new Vue({
+  el: "#app",
+  data: {
+    isShow: true | false
+  }
+});
+```
+
 ### v-if、v-else、v-else-if
+
+:::tip 说明
+`v-if`条件指令，根据表达式的真假条件渲染元素。在切换时元素及它的数据绑定、组件销毁或重建。如果元素是`<template>`，将提出他的内容作为条件块。
+
+`v-else`、`v-else-if`的前一个兄弟元素必须是`v-if`或`v-else-if`。
+:::
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+```
 
 ### v-for
 
+:::tip 说明
+基本源数据多次渲染元素或模板块。此指令的值必须使用特定的语法`alias in expression`，为当前元素遍历元素提供别名。
+:::
+
+```html
+<div v-for="item in items">{{item.text}}</div>
+```
+
+另外也可以为数组索引指定别名（或用于对象的键）：
+
+```html
+<div v-for="(item, index) in items"></div>
+<div v-for="(val, key) in object"></div>
+<div v-for="(val, key, index) in object"></div>
+```
+
+`v-for`默认行为试着不改变整体，而是替换元素。 迫使其重新排序的元素，需要提供一个`key`的特殊属性：
+
+```html
+<div v-for="item in items" :key="item.id">
+  {{ item.text }}
+</div>
+```
+
 ### v-on
+
+:::tip 说明
+可缩写`@`。绑定事件监听器。事件类型由参数指定。表达式可以是一个方法的名字或一个内联语句，如果没有修饰符也可以省略。
+
+用在普通元素上时，只能监听原生 DOM 事件。用在自定义元素组件上时，也可以监听子组件触发的自定义事件。
+
+在监听原生 DOM 事件时，方法以事件为唯一的参数。如果使用内联语句，语句可以访问一个 $event 属性：v-on:click="handle('ok', $event)"。
+
+从 2.4.0 开始，v-on 同样支持不带参数绑定一个事件/监听器键值对的对象。注意当使用对象语法时，是不支持任何修饰器的。
+:::
+
+- 修饰符
+
+  - `.stop` - 调用 `event.stopPropagation()`。
+
+  - `.prevent` - 调用 `event.preventDefault()`。
+
+  - `.capture` - 添加事件侦听器时使用 capture 模式。
+
+  - `.self` - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+
+  - `.{keyCode | keyAlias}`- 只当事件是从特定键触发时才触发回 调。
+
+  - `.native` - 监听组件根元素的原生事件。
+
+  - `.once` - 只触发一次回调。
+
+  - `.left` - (2.2.0) 只当点击鼠标左键时触发。
+
+  - `.right` - (2.2.0) 只当点击鼠标右键时触发。
+
+  - `.middle` - (2.2.0) 只当点击鼠标中键时触发。
+
+  - `.passive` - (2.3.0) 以 `{ passive: true }` 模式添加侦听器
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<!-- 方法处理器 -->
+<button v-on:click="doThis"></button>
+
+<!-- 内联语句 -->
+<button v-on:click="doThat('hello', $event)"></button>
+
+<!-- 缩写 -->
+<button @click="doThis"></button>
+
+<!-- 停止冒泡 -->
+<button @click.stop="doThis"></button>
+
+<!-- 阻止默认行为 -->
+<button @click.prevent="doThis"></button>
+
+<!-- 阻止默认行为，没有表达式 -->
+<form @submit.prevent></form>
+
+<!--  串联修饰符 -->
+<button @click.stop.prevent="doThis"></button>
+
+<!-- 键修饰符，键别名 -->
+<input @keyup.enter="onEnter">
+
+<!-- 键修饰符，键代码 -->
+<input @keyup.13="onEnter">
+
+<!-- 点击回调只会触发一次 -->
+<button v-on:click.once="doThis"></button>
+
+<!-- 对象语法 (2.4.0+) -->
+<button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
+```
+
+在子组件上监听自定义事件 (当子组件触发“my-event”时将调用[事件处理器](https://cn.vuejs.org/v2/guide/events.html))：
+
+```html
+<my-component @my-event="handleThis"></my-component>
+
+<!-- 内联语句 -->
+<my-component @my-event="handleThis(123, $event)"></my-component>
+
+<!-- 组件中的原生事件 -->
+<my-component @click.native="onClick"></my-component>
+```
 
 ### v-bind
 
+:::tip 说明
+缩写`@`。动态地绑定一个或多个特性，或一个组件 prop 到表达式。
+
+在绑定 class 或 style 特性时，支持其它类型的值，如数组或对象。可以通过下面的教程链接查看详情。
+
+在绑定 prop 时，prop 必须在子组件中声明。可以用修饰符指定不同的绑定类型。
+
+没有参数时，可以绑定到一个包含键值对的对象。注意此时 class 和 style 绑定不支持数组和对象。
+:::
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<!-- 绑定一个属性 -->
+<img v-bind:src="imageSrc">
+
+<!-- 缩写 -->
+<img :src="imageSrc">
+
+<!-- 内联字符串拼接 -->
+<img :src="'/path/to/images/' + fileName">
+
+<!-- class 绑定 -->
+<div :class="{ red: isRed }"></div>
+<div :class="[classA, classB]"></div>
+<div :class="[classA, { classB: isB, classC: isC }]">
+
+<!-- style 绑定 -->
+<div :style="{ fontSize: size + 'px' }"></div>
+<div :style="[styleObjectA, styleObjectB]"></div>
+
+<!-- 绑定一个有属性的对象 -->
+<div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
+
+<!-- 通过 prop 修饰符绑定 DOM 属性 -->
+<div v-bind:text-content.prop="text"></div>
+
+<!-- prop 绑定。“prop”必须在 my-component 中声明。-->
+<my-component :prop="someThing"></my-component>
+
+<!-- 通过 $props 将父组件的 props 一起传给子组件 -->
+<child-component v-bind="$props"></child-component>
+
+<!-- XLink -->
+<svg><a :xlink:special="foo"></a></svg>
+```
+
 ### v-model
+
+:::tip 说明
+在表单控件或者组件上创建双向绑定。细节请看下面的教程链接。
+:::
+
+- 修饰符：
+
+  - .lazy - 取代 input 监听 change 事件
+
+  - .number - 输入字符串转为数字
+
+  - .trim - 输入首尾空格过滤
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<div id="app">
+    <input v-model="message"/>
+    <p>{{message}}</p>
+</div>
+```
+
+```js
+var vm = new Vue({
+  el: "#app",
+  data: {
+    message: "message"
+  }
+});
+```
 
 ### v-pre
 
+::: tip 说明
+跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的节点会加快编译。
+:::
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<span v-pre>{{ this will not be compiled }}</span>
+```
+
 ### v-once
+
+::: tip 说明
+只渲染元素和组件一次。随后的重新渲染，元素/组件及其所有的子节点将被视为静态内容并跳过。这可以用于优化更新性能。
+:::
+
+:::tip 示例
+&nbsp;
+:::
+
+```html
+<!-- 单个元素 -->
+<span v-once>This will never change: {{msg}}</span>
+<!-- 有子元素 -->
+<div v-once>
+  <h1>comment</h1>
+  <p>{{msg}}</p>
+</div>
+<!-- 组件 -->
+<my-component v-once :comment="msg"></my-component>
+<!-- `v-for` 指令-->
+<ul>
+  <li v-for="i in list" v-once>{{i}}</li>
+</ul>
+```
 
 ## 生命周期
 
