@@ -8,7 +8,7 @@ module.exports = {
       "script",
       {
         type: "text/javascript",
-        src: "http://tajs.qq.com/stats?sId=66001583",
+        src: "https://tajs.qq.com/stats?sId=66001583",
         charset: "UTF-8"
       }
     ]
