@@ -23,6 +23,47 @@ Vue.nextTick().then(function() {
 });
 ```
 
+### Vue.filter
+
+:::tip 说明
+**过滤器**：Vue.js 允许自定义过滤器，可用于一些常见的文本格式化。过滤起可用在两个地方：**花括号插值**和`v-bind`**表达式**。过滤起器应该被添加在 Javascript 表达式的尾部，由`|`符号指示。
+:::
+
+```html
+// 在花括号中
+{{message | capitalize}}
+
+// 在 v-bind 中
+<div v-bind:id="rawId | formatId"></div>
+```
+
+你可以在一个组件的选项中定义本地的过滤器：
+
+```js
+filter:{
+  capitalize: function(val){
+    if(!val) return "";
+    val = val.toString();
+    return val.charAt(0).toUpperCase()+val.slice(1)
+  }
+}
+```
+
+或者在创建 Vue 实例之前全局定义本地过滤器：
+
+```js
+Vue.filter("capitalize", function(value) {
+  if (!value) return "";
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+});
+```
+
+:::tip 示例
+&nbsp;
+<vuejs-filter/>
+:::
+
 ## 选项/数据
 
 ### computed
@@ -162,6 +203,45 @@ message: val => this.myMethod(val);
 在选项参数中指定 immediate: true 将立即以表达式的当前值触发回调.
 :::
 
+## 指令
+
+### v-text
+
+:::tip 说明
+更新元素的`textContent`。如果要更新部分`textContent`,需要使用{{`Mustcache`}}插件。
+:::
+
+```html
+<span v-text="msg"></span>
+<span>{{msg}}</span>
+```
+
+### v-html
+
+:::tip 说明
+更新元素的`innerHTML`。**内容按普通html插入 - 不会作为Vue模板进行编译**。如果试图使用`v-html`组合模板，可以重新考虑是否使用t通过使用组件来替代。
+:::
+
+:::warning 警告
+在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) 攻击。只在可信内容上使用`v-html`，**永不**用在用户提交的内容上。
+:::
+
+### v-show
+
+### v-if、v-else、v-else-if
+
+### v-for
+
+### v-on
+
+### v-bind
+
+### v-model
+
+### v-pre
+
+### v-once
+
 ## 生命周期
 
 ::: tip 说明
@@ -247,7 +327,7 @@ mounted(){
 ### destroyed
 
 :::tip 说明
-Vue实例销毁后调用。调用后，实例指示的所有哪个是都会被解绑，所有的时间监听器会被移除，所有的子实例也会被销毁。
+Vue 实例销毁后调用。调用后，实例指示的所有哪个是都会被解绑，所有的时间监听器会被移除，所有的子实例也会被销毁。
 
 **该钩子在服务器渲染期间不会被调用。**
 :::
