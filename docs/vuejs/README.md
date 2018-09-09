@@ -519,6 +519,45 @@ var vm = new Vue({
 </ul>
 ```
 
+## 内置的组件
+
+### transition
+
+::: tip 说明
+&lt;transition&gt; 元素作为单个元素/组件的过渡效果。&lt;transition&gt;只会把过渡效果应用到其包裹的内容上，而不会额外渲染 DOM 元素，也不会出现在检测过的组件层级中。
+:::
+
+```html
+<!-- 简单元素 -->
+<transition>
+  <div v-if="ok">toggled content</div>
+</transition>
+
+<!-- 动态组件 -->
+<transition name="fade" mode="out-in" appear>
+  <component :is="view"></component>
+</transition>
+
+<!-- 事件钩子 -->
+<div id="transition-demo">
+  <transition @after-enter="transitionComplete">
+    <div v-show="ok">toggled content</div>
+  </transition>
+</div>
+```
+
+```js
+new Vue({
+  ...
+  methods: {
+    transitionComplete: function (el) {
+      // 传入 'el' 这个 DOM 元素作为参数。
+    }
+  }
+  ...
+}).$mount('#transition-demo')
+```
+
 ## 生命周期
 
 ::: tip 说明
