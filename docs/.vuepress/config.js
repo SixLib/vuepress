@@ -3,7 +3,14 @@ module.exports = {
   title: "sixlib Note",
   description: "sixlib vuepress note",
   head: [
-    ["link", { rel: "icon", href: "/logo.png" }],
+    ["link", {
+      rel: "icon",
+      href: "/logo.png"
+    }],
+    ["mate", {
+      name: "Keywords",
+      Content: "javescript,vue,node"
+    }],
     [
       "script",
       {
@@ -16,24 +23,49 @@ module.exports = {
   themeConfig: {
     displayAllHeaders: true,
     sidebarDepth: 2,
-    nav: [
-      { text: "Home", link: "/" },
-      { text: "Javascript", link: "/javascript/" },
+    nav: [{
+        text: "Home",
+        link: "/"
+      },
+      {
+        text: "Javascript",
+        link: "/javascript/"
+      },
       {
         text: "Vue",
-        items: [
-          { text: "Vuejs", link: "/vuejs/" },
-          { text: "Vue-Router", link: "/vuerouter/" }
+        items: [{
+            text: "Vuejs",
+            link: "/vuejs/"
+          },
+          {
+            text: "Vue-Router",
+            link: "/vuerouter/"
+          }
         ]
       },
-      { text: "NodeJs", link: "/nodejs/" },
-      { text: "GitHub", link: "https://github.com/SixLib/vuepress" }
+      {
+        text: "NodeJs",
+        items: [{
+            text: "Node面试笔记",
+            link: "/nodejs/interview_notes"
+          },
+          {
+            text: "koa笔记",
+            link: "/nodejs/koa_note"
+          }
+        ]
+      },
+      {
+        text: "GitHub",
+        link: "https://github.com/SixLib/vuepress"
+      }
     ],
     sidebar: {
       "/vuejs/": [""],
       "/vuerouter/": [""],
       "/javascript/": [""],
-      "/nodejs/": [""]
+      "/nodejs/interview_notes": ["interview_notes"],
+      "/nodejs/koa_note": ["koa_note"]
     },
     lastUpdated: "上次修改时间"
   },
