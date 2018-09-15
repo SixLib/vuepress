@@ -18,6 +18,7 @@ module.exports = {
     sidebarDepth: 2,
     nav: [
       { text: "Home", link: "/" },
+      { text: "Javascript", link: "/javascript/" },
       {
         text: "Vue",
         items: [
@@ -25,11 +26,14 @@ module.exports = {
           { text: "Vue-Router", link: "/vuerouter/" }
         ]
       },
+      { text: "NodeJs", link: "/nodejs/" },
       { text: "GitHub", link: "https://github.com/SixLib/vuepress" }
     ],
     sidebar: {
       "/vuejs/": [""],
-      "/vuerouter/": [""]
+      "/vuerouter/": [""],
+      "/javascript/": [""],
+      "/nodejs/": [""]
     },
     lastUpdated: "上次修改时间"
   },

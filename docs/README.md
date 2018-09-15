@@ -6,7 +6,7 @@ sidebar: false
 
 ## 全局安装
 
-```sh {4}
+```sh
 # 安装
 cnpm i -g vuepress
 # 新建一个 markdown 文件
@@ -23,7 +23,7 @@ vuepress build
 
 在 `package.json`添加一个脚本：
 
-```json{4}
+```json
 {
   "scripts": {
     "docs:dev": "vuepress dev docs",
