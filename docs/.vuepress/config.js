@@ -28,8 +28,11 @@ module.exports = {
         link: "/"
       },
       {
-        text: "Javascript",
-        link: "/javascript/"
+        text: "EMCAScript",
+        items: [{
+          text: "es5",
+          link: "/javascript/es5/"
+        }]
       },
       {
         text: "Vue",
@@ -63,7 +66,7 @@ module.exports = {
     sidebar: {
       "/vuejs/": [""],
       "/vuerouter/": [""],
-      "/javascript/": [""],
+      "/javascript/es5/": [""],
       "/nodejs/interview_notes": ["interview_notes"],
       "/nodejs/koa_note": ["koa_note"]
     },
