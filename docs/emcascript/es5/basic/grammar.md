@@ -1,4 +1,4 @@
-# JAVASCRIPT
+# JavaScript 基本语法
 
 ## 语句
 
@@ -476,3 +476,38 @@ for ( ; ; ) {
 }
 ```
 全部省略了`for`语句表达式的三个部分，结果就是导致无限循环(死循环)。
+### do...while 循环
+`do...while`循环与`while`循环类似，唯一的区别就是先运行一次循环，然后判断循环条件。
+```javascript
+var a = 1;
+var b = 3;
+do {
+  console.log(a);
+  a++;
+} while (a < b);
+```
+### break 语句和 continue 语句
+`break` 和`continue`都具有跳转作用，可以让代码不按照既有的顺序执行。
+`break`用于跳出代码块或循环。
+``` javascript
+for (var i = 0; i < 5; i++) {
+  console.log(i);
+  if (i === 3)
+    break;
+}
+// 0
+// 1
+// 2
+// 3
+```
+`continue`用于立即终止本轮循环，返回循环结构的头部，开始下一轮循环。
+``` javascript
+var i = 0;
+while (i < 100){
+  i++;
+  if (i % 2 === 0) continue;
+  console.log('i 当前为：' + i);
+}
+```
+上面代码只有在i为奇数时，才会输出i的值。如果i为偶数，则直接进入下一轮循环。
+如果存在多重循环，不带参数的break语句和continue语句都只针对最内层循环。
